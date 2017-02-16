@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 public abstract class Entity {
 
-    //MAde Comment via Internet
+    //Made Comment via Internet park
     
     private Game game;
     private Color color;
