@@ -30,7 +30,7 @@ public class Game extends JPanel implements ActionListener {
         frame.setTitle("Shapes");
         setPreferredSize(new Dimension(1580, 820));
         setBackground(Color.black);
-        Game.foodscore = 0;
+        Stats.foodscore = 0;
 
 
         ImageIcon Pic = new ImageIcon("./src/Icon.png");
