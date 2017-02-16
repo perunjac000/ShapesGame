@@ -18,6 +18,7 @@ public class Game extends JPanel implements ActionListener {
     int dy;
     int dx;
 
+
     public Game() {
 
         x = 0;
@@ -29,6 +30,7 @@ public class Game extends JPanel implements ActionListener {
         frame.setTitle("Shapes");
         setPreferredSize(new Dimension(1580, 820));
         setBackground(Color.black);
+        Game.foodscore = 0;
 
 
         ImageIcon Pic = new ImageIcon("./src/Icon.png");
@@ -89,15 +91,15 @@ public class Game extends JPanel implements ActionListener {
 
         entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
                     (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                     (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
         }
-        for(int i = 0; i< (int)(Math.random()+6)*3;i++) {
+        for(int i = 0; i< (int)(Math.random()+3)*3;i++) {
         entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
                 (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
 
@@ -109,7 +111,7 @@ public class Game extends JPanel implements ActionListener {
         for (int i = 1; i < entities.size()-1; i++) {
             if (getBounds().intersects(entities.get(i).getBounds())) {
                 if (x < width / 2) {
-                    for (int j = x; getBounds().intersects(entities.get(i).getBounds()); x++) {
+                    for (int j = x; getBounds().intersects(entities.get(i).getBounds()); x--) {
                     }
                     dx *= -1;
                 }
