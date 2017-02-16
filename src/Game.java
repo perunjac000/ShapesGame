@@ -97,7 +97,7 @@ public class Game extends JPanel implements ActionListener {
             entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                     (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
         }
-        for(int i = 0; i< (int)(Math.random()+6)*3;i++) {
+        for(int i = 0; i< (int)(Math.random()*6)+5;i++) {
         entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
                 (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
 
