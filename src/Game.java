@@ -1,8 +1,13 @@
+import javafx.application.Application;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import static javax.swing.JOptionPane.NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
 
 
 /**
@@ -17,8 +22,7 @@ public class Game extends JPanel implements ActionListener {
     ArrayList<Entity> entities;
     int dy;
     int dx;
-
-
+    int choose;
     public Game() {
 
         x = 0;
@@ -131,8 +135,13 @@ public class Game extends JPanel implements ActionListener {
 
 
                 } else if (entities.get(i) instanceof Circle) {
-                    JOptionPane.showMessageDialog(null, "YOU DIED");
-                    System.exit(0);
+                    choose =JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
+                    if(choose == YES_OPTION){
+                        new Game().restart();
+                    }
+                    if(choose == NO_OPTION){
+                        System.exit(0);
+                    }
 
                 }
             }
@@ -162,6 +171,11 @@ public class Game extends JPanel implements ActionListener {
             obj.paint(g);
         }
         printSimpleString(String.valueOf(Stats.foodscore), getWidth() / 15, 0, 10, g);
+    }
+    public void restart() {
+        Game game = new Game();
+        game.init();
+        game.run();
     }
 
 
