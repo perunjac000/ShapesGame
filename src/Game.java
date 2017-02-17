@@ -99,16 +99,17 @@ public class Game extends JPanel implements ActionListener {
             entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                     (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
         }
-        for(int i = 0; i< (int)(Math.random()+3)*3;i++) {
-        entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
-                (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
+        for (int i = 0; i < (int) (Math.random() + 3) * 3; i++) {
+            entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
+                    (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
 
+
+        }
 
     }
 
-}
     public void bounce() {
-        for (int i = 1; i < entities.size()-1; i++) {
+        for (int i = 1; i < entities.size() - 1; i++) {
             if (getBounds().intersects(entities.get(i).getBounds())) {
                 if (x < width / 2) {
                     for (int j = x; getBounds().intersects(entities.get(i).getBounds()); x--) {
@@ -118,6 +119,7 @@ public class Game extends JPanel implements ActionListener {
             }
         }
     }
+
     public void collisions() {
 
         for (int i = 1; i < entities.size(); i++) {
@@ -125,6 +127,7 @@ public class Game extends JPanel implements ActionListener {
             if (entities.get(0).collides(entities.get(i))) {
                 if (entities.get(i) instanceof Food) {
                     entities.remove(i);
+                    Stats.updateFoodscore();
 
 
                 } else if (entities.get(i) instanceof Circle) {
@@ -134,14 +137,13 @@ public class Game extends JPanel implements ActionListener {
                 }
             }
 
-               if (entities.get(i).collides(entities.get(i))) {
-                    if (entities.get(i) instanceof Obstacles) {
-                        bounce();
-                        //entities.get(i).speedUp();
-                    }
+            if (entities.get(i).collides(entities.get(i))) {
+                if (entities.get(i) instanceof Obstacles) {
+                    bounce();
+                    //entities.get(i).speedUp();
+                }
 
             }
-
 
 
         }
@@ -159,7 +161,7 @@ public class Game extends JPanel implements ActionListener {
         for (Entity obj : entities) {
             obj.paint(g);
         }
-
+        printSimpleString(String.valueOf(Stats.foodscore), getWidth() / 15, 0, 10, g);
     }
 
 
@@ -169,5 +171,13 @@ public class Game extends JPanel implements ActionListener {
         game.run();
     }
 
-}
 
+    private void printSimpleString(String s, int width, int XPos, int YPos, Graphics g2d) {
+
+        int stringLen = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth() + 20;
+        int start = width / 2 - stringLen / 2;
+        g2d.drawString(s, start + XPos, YPos);
+
+
+    }
+}
