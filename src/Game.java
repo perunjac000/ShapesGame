@@ -70,6 +70,8 @@ public class Game extends JPanel implements ActionListener {
         frame.pack();
         frame.setLocationRelativeTo(null);
 
+
+
     }
 
     @Override
@@ -132,10 +134,14 @@ public class Game extends JPanel implements ActionListener {
                 if (entities.get(i) instanceof Food) {
                     entities.remove(i);
                     Stats.updateFoodscore();
+                    if(Stats.foodscore == 30){
+                        entities.get(0);
+                        System.out.println("You beat level 1");
+                    }
 
 
                 } else if (entities.get(i) instanceof Circle) {
-                    choose =JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
+                    choose = JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
                     if(choose == YES_OPTION){
                         new Game().restart();
                     }
@@ -170,7 +176,6 @@ public class Game extends JPanel implements ActionListener {
         for (Entity obj : entities) {
             obj.paint(g);
         }
-
         g.setFont(new Font("Serif", Font.BOLD, 32));
         printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
     }
@@ -196,4 +201,5 @@ public class Game extends JPanel implements ActionListener {
 
 
     }
+
 }
