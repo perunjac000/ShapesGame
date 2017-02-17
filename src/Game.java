@@ -161,7 +161,9 @@ public class Game extends JPanel implements ActionListener {
         for (Entity obj : entities) {
             obj.paint(g);
         }
-        printSimpleString(String.valueOf(Stats.foodscore), getWidth() / 15, 0, 10, g);
+
+        g.setFont(new Font("Serif", Font.BOLD, 32));
+        printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
     }
 
 
