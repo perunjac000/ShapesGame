@@ -135,8 +135,8 @@ public class Game extends JPanel implements ActionListener {
                     entities.remove(i);
                     Stats.updateFoodscore();
                     if(Stats.foodscore == 30){
-                        entities.get(0);
-                        System.out.println("You beat level 1");
+                        entities.remove(i);
+                        JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
                     }
 
 
