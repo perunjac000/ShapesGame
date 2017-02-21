@@ -126,36 +126,38 @@ public class Game extends JPanel implements ActionListener {
 
     public void collisions() {
 
-        for (int i = 1; i < entities.size(); i++) {
+            for (int i = 1; i < entities.size(); i++) {
 
-            if (entities.get(0).collides(entities.get(i))) {
-                if (entities.get(i) instanceof Food) {
-                    entities.remove(i);
-                    Stats.updateFoodscore();
+                if (entities.get(0).collides(entities.get(i))) {
+                    if (entities.get(i) instanceof Food) {
+                        entities.remove(i);
+                        Stats.updateFoodscore();
 
 
-                } else if (entities.get(i) instanceof Circle) {
-                    choose =JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
-                    if(choose == YES_OPTION){
-                        new Game().restart();
+                    } else if (entities.get(i) instanceof Circle) {
+                        choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball", JOptionPane.YES_NO_OPTION);
+                        if (choose == YES_OPTION) {
+                            new Game().restart();
+                        }
+                        if (choose == NO_OPTION) {
+                           System.exit(0);
+                        }
+
                     }
-                    if(choose == NO_OPTION){
-                        System.exit(0);
+                }
+
+                if (entities.get(i).collides(entities.get(i))) {
+                    if (entities.get(i) instanceof Obstacles) {
+                        bounce();
+                        //entities.get(i).speedUp();
                     }
 
                 }
-            }
 
-            if (entities.get(i).collides(entities.get(i))) {
-                if (entities.get(i) instanceof Obstacles) {
-                    bounce();
-                    //entities.get(i).speedUp();
-                }
 
             }
 
 
-        }
     }
 
     public void run() {
@@ -178,6 +180,7 @@ public class Game extends JPanel implements ActionListener {
         Game game = new Game();
         game.init();
         game.run();
+        timer.start();
     }
 
 
