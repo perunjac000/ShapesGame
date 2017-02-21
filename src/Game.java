@@ -70,6 +70,8 @@ public class Game extends JPanel implements ActionListener {
         frame.pack();
         frame.setLocationRelativeTo(null);
 
+
+
     }
 
     @Override
@@ -126,38 +128,40 @@ public class Game extends JPanel implements ActionListener {
 
     public void collisions() {
 
-            for (int i = 1; i < entities.size(); i++) {
+        for (int i = 1; i < entities.size(); i++) {
 
-                if (entities.get(0).collides(entities.get(i))) {
-                    if (entities.get(i) instanceof Food) {
+            if (entities.get(0).collides(entities.get(i))) {
+                if (entities.get(i) instanceof Food) {
+                    entities.remove(i);
+                    Stats.updateFoodscore();
+                    if(Stats.foodscore == 30){
                         entities.remove(i);
-                        Stats.updateFoodscore();
-
-
-                    } else if (entities.get(i) instanceof Circle) {
-                        choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball", JOptionPane.YES_NO_OPTION);
-                        if (choose == YES_OPTION) {
-                            new Game().restart();
-                        }
-                        if (choose == NO_OPTION) {
-                           System.exit(0);
-                        }
-
+                        JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
                     }
-                }
 
-                if (entities.get(i).collides(entities.get(i))) {
-                    if (entities.get(i) instanceof Obstacles) {
-                        bounce();
-                        //entities.get(i).speedUp();
+
+                } else if (entities.get(i) instanceof Circle) {
+                    choose = JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
+                    if(choose == YES_OPTION){
+                        new Game().restart();
+                    }
+                    if(choose == NO_OPTION){
+                        System.exit(0);
                     }
 
                 }
+            }
 
+            if (entities.get(i).collides(entities.get(i))) {
+                if (entities.get(i) instanceof Obstacles) {
+                    bounce();
+                    //entities.get(i).speedUp();
+                }
 
             }
 
 
+        }
     }
 
     public void run() {
@@ -172,7 +176,6 @@ public class Game extends JPanel implements ActionListener {
         for (Entity obj : entities) {
             obj.paint(g);
         }
-
         g.setFont(new Font("Serif", Font.BOLD, 32));
         printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
     }
@@ -180,7 +183,6 @@ public class Game extends JPanel implements ActionListener {
         Game game = new Game();
         game.init();
         game.run();
-        timer.start();
     }
 
 
@@ -199,4 +201,5 @@ public class Game extends JPanel implements ActionListener {
 
 
     }
+
 }

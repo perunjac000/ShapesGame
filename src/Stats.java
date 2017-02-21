@@ -3,14 +3,24 @@
  */
 public class Stats {
 
+   public static int foodscore = 0;
+
+   public static void updateFoodscore() {foodscore++;}
+
    private static boolean isPlay = false;
    private static boolean isPause = false;
    private static boolean isMenu = true;
    private static boolean isEnd = false;
 
-   public static int foodscore = 0;
+   public static int pscore = 0, cscore = 0;
 
-   public static void updateFoodscore() {foodscore++;}
+   public static void updatePscore(){
+      pscore++;
+   }
+
+   public static void updateCscore(){
+      cscore++;
+   }
 
    public static boolean isPlay(){
       return isPlay;
@@ -27,27 +37,22 @@ public class Stats {
    public static boolean isEnd(){
       return isEnd;
    }
-
    public static void startPlay(){
       isPlay = true;
    }
 
    public static void stopPlay(){
-      isEnd = false;
+      isPlay = false;
    }
-
    public static void startPause(){
       isPause = true;
    }
-
    public static void stopPause(){
       isPause = false;
    }
-
    public static void startMenu(){
       isMenu = true;
    }
-
    public static void stopMenu(){
       isMenu = false;
    }
@@ -58,7 +63,7 @@ public class Stats {
    }
 
    public static void startGame(){
-      isEnd= false;
+      isEnd = false;
       isPlay = true;
    }
 
@@ -79,11 +84,14 @@ public class Stats {
    }
 
    public static void toggleMenu(){
-      if(isMenu){
+      if(isMenu)
          isMenu = false;
-      }
       else
          isMenu = true;
    }
 
+
+
 }
+
+
