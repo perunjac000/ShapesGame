@@ -3,28 +3,21 @@
  */
 public class Stats {
 
-   public static int foodscore = 0;
-
-   public static void updateFoodscore() {foodscore++;}
-
    private static boolean isPlay = false;
    private static boolean isPause = false;
    private static boolean isMenu = true;
    private static boolean isEnd = false;
+   private static boolean levelTwo = false;
+   private static boolean levelThree = false;
 
-   public static int pscore = 0, cscore = 0;
+    public static int foodscore = 0;
 
-   public static void updatePscore(){
-      pscore++;
-   }
+    public static void updateFoodscore() {foodscore++;}
 
-   public static void updateCscore(){
-      cscore++;
-   }
+    public static boolean levelTwo() { return levelTwo; }
 
-   public static boolean isPlay(){
-      return isPlay;
-   }
+
+   public static boolean isPlay() { return isPlay; }
 
    public static boolean isPause(){
       return isPause;
@@ -41,6 +34,8 @@ public class Stats {
       isPlay = true;
    }
 
+   public static void setLevelTwo() { levelTwo = false; }
+
    public static void stopPlay(){
       isPlay = false;
    }
@@ -55,6 +50,10 @@ public class Stats {
    }
    public static void stopMenu(){
       isMenu = false;
+   }
+
+   public static void startLevelTwo(){
+
    }
 
    public static void endGame(){
