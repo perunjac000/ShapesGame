@@ -16,6 +16,8 @@ public class Stats {
 
     public static boolean levelTwo() { return levelTwo; }
 
+    public static boolean levelThree(){return levelThree;}
+
 
    public static boolean levelOne() { return levelOne; }
 
