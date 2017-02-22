@@ -91,7 +91,10 @@ public class Game extends JPanel implements ActionListener {
 
     }
 
-    public void init() {
+    public void paintComponents(Graphics g) {
+
+        super.paintComponents(g);
+
         if(Stats.levelOne()) {
             entities = new ArrayList<Entity>();
 
@@ -112,7 +115,7 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        if(Stats.levelTwo()){
+        else if(Stats.levelTwo()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
@@ -131,7 +134,7 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        if(Stats.levelThree()){
+        else if(Stats.levelThree()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
@@ -149,6 +152,14 @@ public class Game extends JPanel implements ActionListener {
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
 
             }
+        }
+        if (Stats.isMenu()) {
+
+            g.setColor(Color.white);
+            g.setFont(new Font("serif", Font.BOLD, 32));
+            printSimpleString("Dodge the Cedric's Blue Ball", getWidth(), 0, 200, g);
+            printSimpleString("Press *SPACE* to start", getWidth(), 0, 400, g);
+
         }
 
     }
@@ -186,7 +197,7 @@ public class Game extends JPanel implements ActionListener {
                 } else if (entities.get(i) instanceof Circle) {
                     choose = JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
                     if(choose == YES_OPTION){
-                        new Game().restart();
+
                     }
                     if(choose == NO_OPTION){
                         System.exit(0);
@@ -222,16 +233,12 @@ public class Game extends JPanel implements ActionListener {
         g.setFont(new Font("Serif", Font.BOLD, 32));
         printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
     }
-    public void restart() {
-        Game game = new Game();
-        game.init();
-        game.run();
-    }
+
 
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.init();
+        game.paintComponents(g);
         game.run();
     }
 
