@@ -3,7 +3,7 @@
  */
 public class Stats {
 
-   private static boolean levelOne = false;
+   private static boolean levelOne = true;
    private static boolean isPause = false;
    private static boolean isMenu = true;
    private static boolean isEnd = false;
@@ -32,11 +32,14 @@ public class Stats {
    public static boolean isEnd(){
       return isEnd;
    }
-   public static void startPlay(){
+
+   public static void setLevelOne(){
       levelOne = true;
    }
 
-   public static void setLevelTwo() { levelTwo = false; }
+   public static void setLevelTwo() { levelTwo = true; }
+
+   public static void setLevelThree() { levelThree = true; }
 
    public static void stopPlay(){
       levelOne = false;
@@ -58,6 +61,11 @@ public class Stats {
       levelOne = false;
       levelTwo = true;
 
+   }
+
+   public static void startLevelThree(){
+      levelTwo = false;
+      levelThree = true;
    }
 
    public static void endGame(){

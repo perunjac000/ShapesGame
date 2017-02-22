@@ -115,7 +115,7 @@ public class Game extends JPanel implements ActionListener {
         if(Stats.levelTwo()){
             entities = new ArrayList<Entity>();
 
-            entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
+            entities.add(new Circle(Color.cyan, getWidth() / 2, getHeight() / 2, 20, this));
 
             for (int i = 0; i < 30; i++) {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
@@ -134,7 +134,7 @@ public class Game extends JPanel implements ActionListener {
         if(Stats.levelThree()){
             entities = new ArrayList<Entity>();
 
-            entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
+            entities.add(new Circle(Color.black, getWidth() / 2, getHeight() / 2, 20, this));
 
             for (int i = 0; i < 30; i++) {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
@@ -177,7 +177,7 @@ public class Game extends JPanel implements ActionListener {
                         entities.remove(i);
                         int n = JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
                     if(n == YES_OPTION){
-                        Stats.startLevelTwo();
+                        Stats.startLevelThree();
                     }
                     }
 
