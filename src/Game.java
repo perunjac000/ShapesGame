@@ -80,7 +80,7 @@ public class Game extends JPanel implements ActionListener {
         entities.get(i).move();
          */
 
-        collisions();
+        levelOne();
         entities.get(0).playerMove();
         for (int i = 1; i < entities.size(); i++) {
 
@@ -126,7 +126,7 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
-    public void collisions() {
+    public void levelOne() {
 
         for (int i = 1; i < entities.size(); i++) {
 
@@ -136,14 +136,18 @@ public class Game extends JPanel implements ActionListener {
                     Stats.updateFoodscore();
                     if(Stats.foodscore == 30){
                         entities.remove(i);
-                        JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
+                        int n = JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
+                    if(n == YES_OPTION){
+                        Stats.startLevelTwo();
                     }
+                    }
+
 
 
                 } else if (entities.get(i) instanceof Circle) {
                     choose = JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
                     if(choose == YES_OPTION){
-                        new Game().restart();
+                    ;
                     }
                     if(choose == NO_OPTION){
                         System.exit(0);
@@ -163,6 +167,7 @@ public class Game extends JPanel implements ActionListener {
 
         }
     }
+    level
 
     public void run() {
         timer = new Timer(1000 / 60, this);
@@ -179,11 +184,7 @@ public class Game extends JPanel implements ActionListener {
         g.setFont(new Font("Serif", Font.BOLD, 32));
         printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
     }
-    public void restart() {
-        Game game = new Game();
-        game.init();
-        game.run();
-    }
+
 
 
     public static void main(String[] args) {
