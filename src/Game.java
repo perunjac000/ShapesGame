@@ -113,7 +113,42 @@ public class Game extends JPanel implements ActionListener {
             }
         }
         if(Stats.levelTwo()){
+            entities = new ArrayList<Entity>();
 
+            entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
+
+            for (int i = 0; i < 30; i++) {
+                entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
+            }
+            for (int i = 0; i < 5; i++) {
+                entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
+            }
+            for (int i = 0; i < (int) (Math.random() + 3) * 3; i++) {
+                entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
+
+            }
+        }
+        if(Stats.levelThree()){
+            entities = new ArrayList<Entity>();
+
+            entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
+
+            for (int i = 0; i < 30; i++) {
+                entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
+            }
+            for (int i = 0; i < 10; i++) {
+                entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
+            }
+            for (int i = 0; i < (int) (Math.random() + 3) * 3; i++) {
+                entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
+                        (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
+
+            }
         }
 
     }
