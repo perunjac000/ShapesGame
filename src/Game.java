@@ -91,10 +91,7 @@ public class Game extends JPanel implements ActionListener {
 
     }
 
-    public void paintComponents(Graphics g) {
-
-        super.paintComponents(g);
-
+    public void init() {
         if(Stats.levelOne()) {
             entities = new ArrayList<Entity>();
 
@@ -104,7 +101,7 @@ public class Game extends JPanel implements ActionListener {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 5; i++) {
                 entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
             }
@@ -115,7 +112,7 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        else if(Stats.levelTwo()){
+        if(Stats.levelTwo()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.cyan, getWidth() / 2, getHeight() / 2, 20, this));
@@ -134,7 +131,7 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        else if(Stats.levelThree()){
+        if(Stats.levelThree()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.black, getWidth() / 2, getHeight() / 2, 20, this));
@@ -153,70 +150,59 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        if (Stats.isMenu()) {
-
-            g.setColor(Color.white);
-            g.setFont(new Font("serif", Font.BOLD, 32));
-            printSimpleString("Dodge the Cedric's Blue Ball", getWidth(), 0, 200, g);
-            printSimpleString("Press *SPACE* to start", getWidth(), 0, 400, g);
-
-        }
 
     }
 
-    public void bounce() {
-        for (int i = 1; i < entities.size() - 1; i++) {
-            if (getBounds().intersects(entities.get(i).getBounds())) {
-                if (x < width / 2) {
-                    for (int j = x; getBounds().intersects(entities.get(i).getBounds()); x--) {
-                    }
-                    dx *= -1;
-                }
-            }
-        }
-    }
+
 
     public void collisions() {
 
         for (int i = 1; i < entities.size(); i++) {
-
+            for(int j = i+1; j<entities.size();j++) {
             if (entities.get(0).collides(entities.get(i))) {
                 if (entities.get(i) instanceof Food) {
                     entities.remove(i);
                     Stats.updateFoodscore();
-                    if(Stats.foodscore == 30){
+                    if (Stats.foodscore == 30) {
                         entities.remove(i);
-                        int n = JOptionPane.showConfirmDialog(null,"You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
-                    if(n == YES_OPTION){
-                        Stats.startLevelThree();
+                        int n = JOptionPane.showConfirmDialog(null, "You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
+                        if (n == YES_OPTION) {
+                            Stats.startLevelTwo();
+                        }
+                        if (n == NO_OPTION) {
+                            System.exit(0);
+                        }
                     }
-                    }
-
-
 
                 } else if (entities.get(i) instanceof Circle) {
-                    choose = JOptionPane.showConfirmDialog(null,"You Suck, Wanna try again?","Dodge the Cedric's Blue Ball" ,JOptionPane.YES_NO_OPTION);
-                    if(choose == YES_OPTION){
-
+                    choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball",
+                            JOptionPane.YES_NO_OPTION);
+                    if (choose == YES_OPTION) {
+                        new Game().restart();
                     }
-                    if(choose == NO_OPTION){
+                    if (choose == NO_OPTION) {
                         System.exit(0);
                     }
 
                 }
-            }
 
-            if (entities.get(i).collides(entities.get(i))) {
-                if (entities.get(i) instanceof Obstacles) {
-                    bounce();
-                    //entities.get(i).speedUp();
+                    else if (entities.get(i).collides(entities.get(j))) {
+                        if (entities.get(i) instanceof Obstacles) {
+                            System.out.println("hi");
+                            dx *= -1;
+                            dy *= -1;
+
+                        }
+                    }
+                }
+
+
+
                 }
 
             }
-
-
         }
-    }
+
 
     public void run() {
         timer = new Timer(1000 / 60, this);
@@ -231,14 +217,28 @@ public class Game extends JPanel implements ActionListener {
             obj.paint(g);
         }
         g.setFont(new Font("Serif", Font.BOLD, 32));
-        printSimpleString(String.valueOf("Food counter: "+ Stats.foodscore), getWidth() / 6, 0, 25, g);
-    }
+        printSimpleString(String.valueOf("Food counter: " + Stats.foodscore), getWidth() / 6, 0, 25, g);
+        if (Stats.levelOne()){
+            Stats.startLevelOne();
+        }
+       else if (Stats.isMenu()) {
 
+            g.setColor(Color.white);
+            g.setFont(new Font("Serif", Font.BOLD, 32));
+            printSimpleString("PONG", getWidth(), 0, 200, g);
+            printSimpleString("Press *SPACE* to start", getWidth(), 0, 400, g);
+        }
+    }
+    public void restart() {
+        Game game = new Game();
+        game.init();
+        game.run();
+    }
 
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.paintComponents(g);
+        game.init();
         game.run();
     }
 

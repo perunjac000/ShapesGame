@@ -53,8 +53,8 @@ public abstract class Entity {
 
         x += dx;
         y += dy;
+}
 
-    }
 
     public void playerMove() {
         setX(game.positionX);

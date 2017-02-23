@@ -5,7 +5,7 @@ public class Stats {
 
    private static boolean levelOne = true;
    private static boolean isPause = false;
-   private static boolean isMenu = true;
+   private static boolean isMenu = false;
    private static boolean isEnd = false;
    private static boolean levelTwo = false;
    private static boolean levelThree = false;
@@ -33,13 +33,8 @@ public class Stats {
       return isEnd;
    }
 
-   public static void setLevelOne(){
-      levelOne = true;
-   }
-
-   public static void setLevelTwo() { levelTwo = true; }
-
-   public static void setLevelThree() { levelThree = true; }
+   public static void setLevelTwo(){ levelTwo = true; }
+   public static void setLevelThree(){ levelThree = true; }
 
    public static void stopPlay(){
       levelOne = false;
@@ -55,6 +50,11 @@ public class Stats {
    }
    public static void stopMenu(){
       isMenu = false;
+   }
+
+   public static void startLevelOne(){
+       isMenu = false;
+       levelOne = true;
    }
 
    public static void startLevelTwo(){
