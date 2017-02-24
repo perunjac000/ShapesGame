@@ -147,7 +147,6 @@ public class Game extends JPanel implements ActionListener {
             for (int i = 0; i < (int) (Math.random() + 3) * 3; i++) {
                 entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
-
             }
         }
 
@@ -185,13 +184,11 @@ public class Game extends JPanel implements ActionListener {
                     }
 
                 }
-
-                    else if (entities.get(i).collides(entities.get(j))) {
-                        if (entities.get(i) instanceof Obstacles) {
+                    if (entities.get(i).collides(entities.get(j))) {
+                        if (entities.get(j) instanceof Obstacles) {
                             System.out.println("hi");
                             dx *= -1;
                             dy *= -1;
-
                         }
                     }
                 }
