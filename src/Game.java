@@ -32,7 +32,7 @@ public class Game extends JPanel implements ActionListener {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Shapes");
-        setPreferredSize(new Dimension(1580, 820));
+        setPreferredSize(new Dimension(600, 600));
         setBackground(Color.black);
         Stats.foodscore = 0;
 
@@ -97,15 +97,15 @@ public class Game extends JPanel implements ActionListener {
 
             entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
 
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 1; i++) {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
             }
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 1; i++) {
                 entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
             }
-            for (int i = 0; i < (int) (Math.random() + 3) * 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
 
@@ -173,7 +173,8 @@ public class Game extends JPanel implements ActionListener {
                         }
                     }
 
-                } else if (entities.get(i) instanceof Circle) {
+                }
+                else if (entities.get(i) instanceof Circle) {
                     choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball",
                             JOptionPane.YES_NO_OPTION);
                     if (choose == YES_OPTION) {
@@ -184,6 +185,7 @@ public class Game extends JPanel implements ActionListener {
                     }
 
                 }
+            }
                     if (entities.get(i).collides(entities.get(j))) {
                         if (entities.get(j) instanceof Obstacles) {
                             System.out.println("hi");
@@ -191,7 +193,7 @@ public class Game extends JPanel implements ActionListener {
                             dy *= -1;
                         }
                     }
-                }
+
 
 
 
