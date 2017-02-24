@@ -187,15 +187,15 @@ public class Game extends JPanel implements ActionListener {
                 }
             }
                     if (entities.get(i).collides(entities.get(j))) {
+                        if (entities.get(i) instanceof Food) {
                         if (entities.get(j) instanceof Obstacles) {
                             System.out.println("hi");
-                            dx *= -1;
-                            dy *= -1;
+
                         }
                     }
 
 
-
+                }
 
                 }
 
