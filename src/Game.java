@@ -97,7 +97,7 @@ public class Game extends JPanel implements ActionListener {
 
             entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
 
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 5; i++) {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
             }
@@ -157,39 +157,39 @@ public class Game extends JPanel implements ActionListener {
     public void collisions() {
 
         for (int i = 1; i < entities.size(); i++) {
-            for(int j = i+1; j<entities.size();j++) {
-            if (entities.get(0).collides(entities.get(i))) {
-                if (entities.get(i) instanceof Food) {
-                    entities.remove(i);
-                    Stats.updateFoodscore();
-                    if (Stats.foodscore == 30) {
+            for (int j = i + 1; j < entities.size(); j++) {
+                if (entities.get(0).collides(entities.get(i))) {
+                    if (entities.get(i) instanceof Food) {
                         entities.remove(i);
-                        int n = JOptionPane.showConfirmDialog(null, "You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
-                        if (n == YES_OPTION) {
-                            Stats.startLevelTwo();
+                        Stats.updateFoodscore();
+                        if (Stats.foodscore == 30) {
+                            entities.remove(i);
+                            int n = JOptionPane.showConfirmDialog(null, "You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
+                            if (n == YES_OPTION) {
+                                Stats.startLevelTwo();
+                            }
+                            if (n == NO_OPTION) {
+                                System.exit(0);
+                            }
                         }
-                        if (n == NO_OPTION) {
+
+                    } else if (entities.get(i) instanceof Circle) {
+                        choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball",
+                                JOptionPane.YES_NO_OPTION);
+                        if (choose == YES_OPTION) {
+                            new Game().restart();
+                        }
+                        if (choose == NO_OPTION) {
                             System.exit(0);
                         }
-                    }
 
-                }
-                else if (entities.get(i) instanceof Circle) {
-                    choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball",
-                            JOptionPane.YES_NO_OPTION);
-                    if (choose == YES_OPTION) {
-                        new Game().restart();
                     }
-                    if (choose == NO_OPTION) {
-                        System.exit(0);
-                    }
-
                 }
-            }
-                    if (entities.get(i).collides(entities.get(j))) {
-                        if (entities.get(i) instanceof Food) {
+                if (entities.get(i).collides(entities.get(j))) {
+                    if (entities.get(i) instanceof Food) {
                         if (entities.get(j) instanceof Obstacles) {
                             System.out.println("hi");
+                            entities.get(i).speedUp();
 
                         }
                     }
@@ -197,11 +197,11 @@ public class Game extends JPanel implements ActionListener {
 
                 }
 
-                }
-
             }
-        }
 
+
+        }
+    }
 
     public void run() {
         timer = new Timer(1000 / 60, this);
