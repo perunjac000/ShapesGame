@@ -139,5 +139,14 @@ public abstract class Entity {
         dx++;
         dy++;
     }
+    public void bounce() {
+        dx*=-1;
+        dy*=-1;
+    }
+
+    public void add() {
+        entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
+                (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, null));
+    }
 
 }

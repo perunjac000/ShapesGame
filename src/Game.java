@@ -13,7 +13,7 @@ import static javax.swing.JOptionPane.YES_OPTION;
 /**
  * Created by perunjac000 on 2/7/2017.
  */
-public class Game extends JPanel implements ActionListener {
+public class Game extends JPanel implements ActionListener, KeyListener {
 
     Timer timer;
     int positionX, positionY;
@@ -23,6 +23,7 @@ public class Game extends JPanel implements ActionListener {
     int dy;
     int dx;
     int choose;
+
     public Game() {
 
         x = 0;
@@ -32,18 +33,13 @@ public class Game extends JPanel implements ActionListener {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Shapes");
-        setPreferredSize(new Dimension(600, 600));
+        setPreferredSize(new Dimension(1300, 800));
         setBackground(Color.black);
         Stats.foodscore = 0;
-
-
         ImageIcon Pic = new ImageIcon("./src/Icon.png");
         Image icon = Pic.getImage();
         frame.setIconImage(icon);
-
-
         frame.add(this);
-
         addMouseMotionListener(new MouseMotionAdapter() {
 
 
@@ -76,16 +72,26 @@ public class Game extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /* for(int i = 0; i < entities.size; i++{
-        entities.get(i).move();
-         */
-
-        collisions();
-        entities.get(0).playerMove();
-        for (int i = 1; i < entities.size(); i++) {
-
-            entities.get(i).move();
-
+        if (Stats.levelOne()) {
+            collisions();
+            entities.get(0).playerMove();
+            for (int i = 1; i < entities.size(); i++) {
+                entities.get(i).move();
+            }
+        }
+        if( Stats.levelTwo()){
+            collisions();
+            entities.get(0).playerMove();
+            for (int i = 1; i < entities.size(); i++) {
+                entities.get(i).move();
+            }
+        }
+        if( Stats.levelThree()){
+            collisions();
+            entities.get(0).playerMove();
+            for (int i = 1; i < entities.size(); i++) {
+                entities.get(i).move();
+            }
         }
         repaint();
 
@@ -94,25 +100,21 @@ public class Game extends JPanel implements ActionListener {
     public void init() {
         if(Stats.levelOne()) {
             entities = new ArrayList<Entity>();
-
             entities.add(new Circle(Color.red, getWidth() / 2, getHeight() / 2, 20, this));
-
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 15; i++) {
                 entities.add(new Food(Color.green, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 20, 30, this));
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 3; i++) {
                 entities.add(new Circle(Color.blue, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, this));
             }
-            for (int i = 0; i < 1; i++) {
+            for (int i = 0; i < 7; i++) {
                 entities.add(new Obstacles(Color.white, (int) (25 + (getWidth() - 100) * Math.random()),
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
-
-
             }
         }
-        if(Stats.levelTwo()){
+        else if(Stats.levelTwo()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.cyan, getWidth() / 2, getHeight() / 2, 20, this));
@@ -131,7 +133,7 @@ public class Game extends JPanel implements ActionListener {
 
             }
         }
-        if(Stats.levelThree()){
+        else if(Stats.levelThree()){
             entities = new ArrayList<Entity>();
 
             entities.add(new Circle(Color.black, getWidth() / 2, getHeight() / 2, 20, this));
@@ -149,7 +151,6 @@ public class Game extends JPanel implements ActionListener {
                         (int) (25 + (getHeight() - 50) * Math.random()), 30, 20, this));
             }
         }
-
     }
 
 
@@ -162,39 +163,28 @@ public class Game extends JPanel implements ActionListener {
                     if (entities.get(i) instanceof Food) {
                         entities.remove(i);
                         Stats.updateFoodscore();
-                        if (Stats.foodscore == 30) {
-                            entities.remove(i);
-                            int n = JOptionPane.showConfirmDialog(null, "You beat level 1, Go to next level?", "WINNER", JOptionPane.YES_NO_OPTION);
-                            if (n == YES_OPTION) {
-                                Stats.startLevelTwo();
-                            }
-                            if (n == NO_OPTION) {
-                                System.exit(0);
-                            }
+                       if (Stats.foodscore == 15) {
+                                Stats.Win();
                         }
-
-                    } else if (entities.get(i) instanceof Circle) {
-                        choose = JOptionPane.showConfirmDialog(null, "You Suck, Wanna try again?", "Dodge the Cedric's Blue Ball",
-                                JOptionPane.YES_NO_OPTION);
-                        if (choose == YES_OPTION) {
-                            new Game().restart();
-                        }
-                        if (choose == NO_OPTION) {
-                            System.exit(0);
-                        }
+                    }
+                    else if (entities.get(i) instanceof Circle) {
+                        Stats.endGame();
 
                     }
                 }
                 if (entities.get(i).collides(entities.get(j))) {
                     if (entities.get(i) instanceof Food) {
                         if (entities.get(j) instanceof Obstacles) {
-                            System.out.println("hi");
+                            entities.get(i).bounce();
+
+                        }
+                    }
+                    if (entities.get(i) instanceof Circle) {
+                        if (entities.get(j) instanceof Obstacles) {
                             entities.get(i).speedUp();
 
                         }
                     }
-
-
                 }
 
             }
@@ -216,7 +206,7 @@ public class Game extends JPanel implements ActionListener {
             obj.paint(g);
         }
         g.setFont(new Font("Serif", Font.BOLD, 32));
-        printSimpleString(String.valueOf("Food counter: " + Stats.foodscore), getWidth() / 6, 0, 25, g);
+        printSimpleString(String.valueOf("Food counter: " + Stats.foodscore), getWidth(), getX()/2, 25, g);
         if (Stats.levelOne()){
             Stats.startLevelOne();
         }
@@ -224,24 +214,34 @@ public class Game extends JPanel implements ActionListener {
 
             g.setColor(Color.white);
             g.setFont(new Font("Serif", Font.BOLD, 32));
-            printSimpleString("PONG", getWidth(), 0, 200, g);
+            printSimpleString("Dodge the Cedric's blue ball", getWidth(), 0, 200, g);
             printSimpleString("Press *SPACE* to start", getWidth(), 0, 400, g);
         }
-    }
-    public void restart() {
-        Game game = new Game();
-        game.init();
-        game.run();
-    }
+        else if(Stats.isWin()){
+            g.setColor(Color.white);
+            g.setFont(new Font("Serif", Font.BOLD, 32));
+            printSimpleString("You Won!!!!!!!!!", getWidth(), 0, 200, g);
+        }
+        else if(Stats.isEnd()){
+            setBackground(Color.red);
+            g.setFont(new Font("Serif", Font.BOLD, 32));
+            printSimpleString(String.valueOf("You lost try again?"), getWidth(), getX()/2, 300, g);
+            printSimpleString(String.valueOf("Press Space to Restart"), getWidth(), getX()/2, 400, g);
+        }
+        else if(Stats.isPause()){
+            g.setColor(Color.white);
+            g.setFont(new Font("Serif", Font.BOLD, 32));
+            printSimpleString("PAUSE", getWidth(), 0, 200, g);
+            printSimpleString("Press *P* to resume", getWidth(), 0, 400, g);
 
+        }
 
+    }
     public static void main(String[] args) {
         Game game = new Game();
         game.init();
         game.run();
     }
-
-
     private void printSimpleString(String s, int width, int XPos, int YPos, Graphics g2d) {
 
         int stringLen = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth() + 20;
@@ -250,5 +250,21 @@ public class Game extends JPanel implements ActionListener {
 
 
     }
-
+@Override
+    public void keyTyped(KeyEvent e) {
+    }
+@Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Stats.startLevelOne();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            Stats.togglePlay();
+            Stats.togglePause();
+            Stats.toggleMenu();
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 }

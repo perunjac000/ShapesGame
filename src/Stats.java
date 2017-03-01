@@ -7,6 +7,7 @@ public class Stats {
    private static boolean isPause = false;
    private static boolean isMenu = false;
    private static boolean isEnd = false;
+   private static boolean isWin = false;
    private static boolean levelTwo = false;
    private static boolean levelThree = false;
 
@@ -31,6 +32,10 @@ public class Stats {
 
    public static boolean isEnd(){
       return isEnd;
+   }
+
+   public static boolean isWin(){
+      return isWin;
    }
 
    public static void setLevelTwo(){ levelTwo = true; }
@@ -60,7 +65,6 @@ public class Stats {
    public static void startLevelTwo(){
       levelOne = false;
       levelTwo = true;
-
    }
 
    public static void startLevelThree(){
@@ -70,6 +74,11 @@ public class Stats {
 
    public static void endGame(){
       isEnd = true;
+      levelOne = false;
+   }
+
+   public static void Win(){
+      isWin = true;
       levelOne = false;
    }
 
